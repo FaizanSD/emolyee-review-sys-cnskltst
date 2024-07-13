@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand navbar-light bg-black shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-white" href="/">Employee Review</a>
+
+    <!-- Toggler button for mobile view -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <% if(locals.user) { %> <% if(user.role.toString() == 'Admin') { %>
+        <!-- Admin links -->
+        <li class="nav-item">
+          <a
+            class="nav-link text-white"
+            aria-current="page"
+            href="/dashboard/admin"
+          >
+            <i class="fas fa-home me-1"></i> Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="/dashboard/admin/addEmployee">
+            <i class="fas fa-user-plus me-1"></i> Add Employee
+          </a>
+        </li>
+        <% } else { %>
+        <!-- Employee links -->
+        <li class="nav-item">
+          <a
+            class="nav-link text-white"
+            aria-current="page"
+            href="/dashboard/employee"
+          >
+            <i class="fas fa-home me-1"></i> Home
+          </a>
+        </li>
+        <% } %> <% } %>
+      </ul>
+
+      <!-- Right-aligned links -->
+      <div class="navbar-nav ms-auto">
+        <% if(locals.user) { %>
+        <a class="nav-link text-white" href="#">
+          <i class="fas fa-user me-1"></i> <%= user.role %>
+        </a>
+        <a class="nav-link text-white" href="/signout">
+          <i class="fas fa-sign-out-alt me-1"></i> Logout
+        </a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>

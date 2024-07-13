@@ -1,0 +1,142 @@
+<% if(locals.user && locals.user.role === 'Admin') { %>
+<div class="container-fluid py-4">
+  <!-- Admin's info -->
+  <div class="w-100 fw-bold text-secondary mb-3 d-flex justify-content-end">
+    <span class="text-dark text-center">Admin: &nbsp;</span> <%= user.name %> |
+    <%= user.email %>
+  </div>
+  <hr />
+
+  <!-- Heading -->
+  <h1 class="text-center mb-4" style="color: #333">All Employees</h1>
+
+  <!-- Employee Cards -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+    <% for (user of employee) { %>
+    <!-- Single Employee Card -->
+    <div class="col">
+      <div class="card shadow" style="background-color: #f8f9fa">
+        <div class="card-body">
+          <!-- Image -->
+          <i
+            class="fas fa-user-tie fa-4x d-block mx-auto mb-3 text-primary"
+            style="width: 40px"
+          ></i>
+
+          <!-- Name -->
+          <h5 class="card-title text-center"><%= user.name %></h5>
+
+          <!-- Email -->
+          <h6 class="card-subtitle mb-2 text-muted text-center">
+            <%= user.email %>
+          </h6>
+
+          <!-- Buttons -->
+          <div class="d-flex justify-content-center">
+            <!-- Assign Review Button -->
+            <button
+              type="button"
+              class="btn btn-sm btn-primary me-2"
+              data-bs-toggle="modal"
+              data-bs-target="#user<%= user.id %>"
+            >
+              <i class="fas fa-file me-1"></i> Assign Review
+            </button>
+
+            <!-- Delete Button -->
+            <a
+              href="/dashboard/admin/delete/?id=<%= user._id %>"
+              class="btn btn-sm btn-danger me-2"
+            >
+              <i class="fas fa-user-minus me-1"></i> Delete
+            </a>
+
+            <!-- Edit Button -->
+            <a
+              href="/dashboard/admin/updateForm/?id=<%= user._id %>"
+              class="btn btn-sm btn-primary"
+              style="background-color: #279eff"
+            >
+              <i class="fas fa-user-edit me-1"></i> Edit
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Assigning Review -->
+    <div
+      class="modal fade"
+      id="user<%= user.id %>"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <!-- Heading -->
+            <h5 class="modal-title" id="exampleModalLabel">Assign Review</h5>
+            <!-- Close Button -->
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              action="/dashboard/admin/assignReview/?id=<%= user._id %>"
+              method="POST"
+            >
+              <!-- Reviewer -->
+              <div class="mb-3">
+                <label class="form-label">Reviewer:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="<%= user.email %>"
+                  disabled
+                />
+              </div>
+
+              <!-- Recipient -->
+              <div class="mb-3">
+                <label class="form-label">Recipient:</label>
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  name="recipient"
+                >
+                  <!-- List of All Recipients -->
+                  <% for (recipient of employee) { %>
+                  <!-- Filter the Current User from the List of Recipients -->
+                  <% if (recipient.email !== user.email) { %>
+                  <option value="<%= recipient._id %>">
+                    <%= recipient.email %>
+                  </option>
+                  <% } %> <% } %>
+                </select>
+              </div>
+
+              <!-- Buttons -->
+              <div class="d-grid gap-2">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancel
+                </button>
+                <button type="submit" class="btn btn-primary">Assign</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</div>
+<% } %>
