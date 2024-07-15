@@ -1,9 +1,9 @@
 // user's model
+const Feedback = require("../models/Feedback");
 const User = require("../models/User");
 
 // feedback model
-const Feedback = require("../models/Feedback.js");
-
+// const Feedback = require("../models/Feedback");
 // render the employee's dashboard
 // also show review assigned and feedback given to the employee
 module.exports.employee = async (req, res) => {
