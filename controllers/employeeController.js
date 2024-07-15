@@ -1,5 +1,5 @@
 // user's model
-const { Feedback } = require("../models/Feedback");
+const { Feedback } = require("../models/Feedback.js");
 const { User } = require("../models/User");
 
 // feedback model
