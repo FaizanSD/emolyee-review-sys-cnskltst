@@ -1,5 +1,5 @@
 // getting user's model
-const User = require("../models/User");
+const { User } = require("../models/User");
 
 // for password encryption
 const bcrypt = require("bcryptjs");
